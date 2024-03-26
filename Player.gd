@@ -12,6 +12,7 @@ var jump_power = 30
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER : Camera3D
 @export var SCORE : Label
+@onready var ELIMS = $"../UI/Fin/Elims"
 @onready var head  = $CameraNode
 
 var _mouse_rotation : Vector3
@@ -20,6 +21,7 @@ var _rotation_input = 4.5
 var _tilt_input : float
 var _player_rotation : Vector3
 var _camera_rotation : Vector3
+
 
 #var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var gravity = 0.98
@@ -57,10 +59,15 @@ func _physics_process(delta):
 	pass
 
 func _input(event):
-	if event.is_action_pressed("escape"):
-		get_tree().quit()
+	#if event.is_action_pressed("escape"):
+		#get_tree().quit()
+	pass
 
 func _unhandled_input(event):
+	if event is InputEventMouseButton:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	elif event.is_action_pressed("escape"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 	_mouse_input = event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
 	if _mouse_input:
 		_rotation_input = -event.relative.x 
@@ -103,7 +110,10 @@ func shoot():
 		var node = result["collider"].get_parent_node_3d()
 		if node.is_in_group('enemy'):
 			node.queue_free()
-			var score = SCORE.text.to_int()
-			score += 1
-			SCORE.text = str(score)
+			var scoreIncrease = SCORE.text.to_int()
+			var elimIncrease = ELIMS.text.to_int()
+			elimIncrease += 1
+			scoreIncrease += 1
+			SCORE.text = str(scoreIncrease)
+			ELIMS.text = str(elimIncrease)
 	pass
