@@ -12,6 +12,6 @@ func _process(delta):
 	elapsed_time += delta
 	TIMER.text = str(elapsed_time)
 	if elapsed_time >= timer_value:
-		print("5 seconds have passed!")
+		$"../UI/Fin".visible = true
 		elapsed_time = 0.0  
-		timer.start()       
+		$"../UI/Time".visible = false
