@@ -1,0 +1,146 @@
+[gd_scene load_steps=12 format=3 uid="uid://6144g73y7ngl"]
+
+[ext_resource type="PackedScene" uid="uid://v5ltuloci8lo" path="res://target.glb" id="1_1tdqm"]
+[ext_resource type="Script" path="res://Reticle.gd" id="2_ganlm"]
+[ext_resource type="Script" path="res://Player.gd" id="3_a1l5q"]
+[ext_resource type="Texture2D" uid="uid://by7tkndrfwxml" path="res://test_tard_w_revolver.png" id="4_uayoy"]
+[ext_resource type="ArrayMesh" uid="uid://cvbdrl5irikhe" path="res://tard_w_revolver.obj" id="4_vr6on"]
+[ext_resource type="Script" path="res://TimerNode.gd" id="6_5rj60"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_i6rqr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qgdqp"]
+size = Vector3(1.06946, 0.994629, 0.101807)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v0kk8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i41a5"]
+albedo_texture = ExtResource("4_uayoy")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_5tyr7"]
+
+[node name="World" type="Node3D"]
+
+[node name="GridMap" type="GridMap" parent="."]
+
+[node name="Env" type="Node3D" parent="."]
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(0.950141, 0, 0, 0, 0.716185, 0, 0, 0, 0.950141, 0, -0.00819881, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.414347, -0.903671, -0.108149, -0.212239, -0.211494, 0.954057, -0.885026, -0.372357, -0.279426, 0, 10.0895, -5.64017)
+
+[node name="Enemy2" type="Node3D" parent="." groups=["enemy"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1904, 0, -31.0433)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Enemy2"]
+physics_material_override = SubResource("PhysicsMaterial_i6rqr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy2/StaticBody3D"]
+transform = Transform3D(0.938658, 0, 0, 0, 1, 0, 0, 0, 1, -18.168, 0.224378, 26.0421)
+shape = SubResource("BoxShape3D_qgdqp")
+
+[node name="target" parent="Enemy2/StaticBody3D" instance=ExtResource("1_1tdqm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.1475, -0.477992, 26.0925)
+
+[node name="Enemy" type="Node3D" parent="." groups=["enemy"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8649, 0, -28.2054)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Enemy"]
+physics_material_override = SubResource("PhysicsMaterial_i6rqr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/StaticBody3D"]
+transform = Transform3D(0.938658, 0, 0, 0, 1, 0, 0, 0, 1, -15.4396, 0.45999, 23.1465)
+shape = SubResource("BoxShape3D_qgdqp")
+
+[node name="target" parent="Enemy/StaticBody3D" instance=ExtResource("1_1tdqm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4191, -0.24238, 23.1969)
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Reticle" type="CenterContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_ganlm")
+
+[node name="ScoreBox" type="Panel" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(1.98995, 2.08988)
+
+[node name="Score" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = -1.0
+offset_right = 75.0
+offset_bottom = 136.0
+theme_override_font_sizes/font_size = 60
+text = "0
+"
+
+[node name="TimerBox" type="Panel" parent="UI"]
+layout_mode = 0
+offset_left = 1020.0
+offset_top = 3.0
+offset_right = 1060.0
+offset_bottom = 43.0
+scale = Vector2(3.2552, 2.12319)
+
+[node name="Time" type="Label" parent="UI"]
+layout_mode = 0
+offset_left = 1043.0
+offset_top = 2.0
+offset_right = 1128.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 60
+text = "0.0"
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("CAMERA_CONTROLLER", "SCORE")]
+script = ExtResource("3_a1l5q")
+CAMERA_CONTROLLER = NodePath("CameraNode/Camera3D")
+SCORE = NodePath("../UI/Score")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -6.96182e-05, 1.19209e-07, -0.00445843)
+shape = SubResource("CapsuleShape3D_v0kk8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/CollisionShape3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00858169, -0.971787, 0.696349)
+material_override = SubResource("StandardMaterial3D_i41a5")
+mesh = ExtResource("4_vr6on")
+
+[node name="CameraNode" type="Node3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0196627, 0.000323057)
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/CameraNode"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.117757, -0.332259)
+
+[node name="ReflectionProbe" type="ReflectionProbe" parent="CharacterBody3D/CameraNode/Camera3D"]
+update_mode = 1
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21427, -0.997694, 0)
+mesh = SubResource("PlaneMesh_5tyr7")
+
+[node name="TimerNode" type="Node" parent="." node_paths=PackedStringArray("TIMER")]
+script = ExtResource("6_5rj60")
+TIMER = NodePath("../UI/Time")
+
+[node name="Timer" type="Timer" parent="TimerNode"]
+process_callback = 0
+one_shot = true
