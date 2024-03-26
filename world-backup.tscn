@@ -1,11 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://6144g73y7ngl"]
+[gd_scene load_steps=16 format=3 uid="uid://dqkkl0i3ewpx6"]
 
+[ext_resource type="PackedScene" uid="uid://cj6wvodoscpll" path="res://enemy_2.tscn" id="1_y5plg"]
 [ext_resource type="PackedScene" uid="uid://br1y03hxas65d" path="res://target.glb" id="2_ganlm"]
+[ext_resource type="Script" path="res://Enemy.gd" id="2_m5v40"]
 [ext_resource type="Script" path="res://Reticle.gd" id="2_nj8dl"]
 [ext_resource type="Script" path="res://Player.gd" id="3_a1l5q"]
 [ext_resource type="Texture2D" uid="uid://cst0j54tcwcs4" path="res://tard_w_revolver.png" id="4_8l02v"]
 [ext_resource type="ArrayMesh" uid="uid://cepyfyq1wimyo" path="res://tard_w_revolver.obj" id="4_vr6on"]
 [ext_resource type="Script" path="res://TimerNode.gd" id="6_5rj60"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jwf2p"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_i6rqr"]
 
@@ -34,31 +38,28 @@ transform = Transform3D(0.950141, 0, 0, 0, 0.716185, 0, 0, 0, 0.950141, 0, -0.00
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.414347, -0.903671, -0.108149, -0.212239, -0.211494, 0.954057, -0.885026, -0.372357, -0.279426, 0, 10.0895, -5.64017)
 
-[node name="Enemy2" type="Node3D" parent="." groups=["enemy"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1904, 0, -31.0433)
+[node name="Enemy2" parent="." instance=ExtResource("1_y5plg")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Enemy2"]
-physics_material_override = SubResource("PhysicsMaterial_i6rqr")
+[node name="StaticBody3D2" type="StaticBody3D" parent="Enemy2"]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy2/StaticBody3D"]
-transform = Transform3D(0.938658, 0, 0, 0, 1, 0, 0, 0, 1, -18.168, 0.224378, 26.0421)
-shape = SubResource("BoxShape3D_qgdqp")
-
-[node name="target" parent="Enemy2/StaticBody3D" instance=ExtResource("2_ganlm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.1475, -0.477992, 26.0925)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy2/StaticBody3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.305433, -18.1633, 0.223696, 26.0438)
+shape = SubResource("BoxShape3D_jwf2p")
 
 [node name="Enemy" type="Node3D" parent="." groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8649, 0, -28.2054)
+script = ExtResource("2_m5v40")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Enemy"]
+[node name="target" parent="Enemy" instance=ExtResource("2_ganlm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4191, -0.24238, 23.1969)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Enemy/target"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.144524, 0.397074, -0.543617)
 physics_material_override = SubResource("PhysicsMaterial_i6rqr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/StaticBody3D"]
-transform = Transform3D(0.938658, 0, 0, 0, 1, 0, 0, 0, 1, -15.4396, 0.45999, 23.1465)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/target/StaticBody3D"]
+transform = Transform3D(0.938658, 0, 0, 0, 1, 0, 0, 0, 1, 0.124023, 0.305296, 0.493217)
 shape = SubResource("BoxShape3D_qgdqp")
-
-[node name="target" parent="Enemy/StaticBody3D" instance=ExtResource("2_ganlm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4191, -0.24238, 23.1969)
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -137,7 +138,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.117757, -0.332259)
 update_mode = 1
 
 [node name="Floor" type="MeshInstance3D" parent="."]
-transform = Transform3D(13.8181, 0, 0, 0, 1, 0, 0, 0, 13.4892, -0.21427, -0.997694, 0)
+transform = Transform3D(13.8181, 0, 0, 0, 1, 0, 0, 0, 13.4892, -0.224333, -2.49242, 0.00472403)
 mesh = SubResource("PlaneMesh_5tyr7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
