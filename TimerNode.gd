@@ -1,7 +1,7 @@
 extends Node
 @onready var timer = $Timer
 var elapsed_time = 0.0
-var timer_value = 5.0
+var timer_value = 2.0
 @export var TIMER : Label
 	
 func _ready():

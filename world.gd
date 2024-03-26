@@ -3,7 +3,8 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	spawn_enemy()
+	#spawn_enemy()
+	pass
 
 # Function to spawn an enemy near the current node position with some randomness
 func spawn_enemy():
@@ -22,3 +23,7 @@ func spawn_enemy():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+
+func _on_timer_timeout():
+	spawn_enemy()

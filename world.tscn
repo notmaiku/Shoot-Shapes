@@ -159,3 +159,5 @@ TIMER = NodePath("../UI/Time")
 [node name="Timer" type="Timer" parent="TimerNode"]
 process_callback = 0
 one_shot = true
+
+[connection signal="timeout" from="TimerNode/Timer" to="." method="_on_timer_timeout"]
