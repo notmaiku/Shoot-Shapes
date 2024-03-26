@@ -21,3 +21,9 @@ func _process(delta):
 		enemy_timer.start()      
 	if curr_loop >= game_done:
 		loop_timer.timeout()
+	elapsed_time += delta
+	TIMER.text = str(elapsed_time)
+	if elapsed_time >= timer_value:
+		$"../UI/Fin".visible = true
+		elapsed_time = 0.0  
+		$"../UI/Time".visible = false

@@ -1,9 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://6144g73y7ngl"]
+[gd_scene load_steps=14 format=3 uid="uid://6144g73y7ngl"]
 
 [ext_resource type="Script" path="res://EnemySpawn.gd" id="1_obubo"]
 [ext_resource type="PackedScene" uid="uid://v5ltuloci8lo" path="res://target.glb" id="1_t0v60"]
 [ext_resource type="Script" path="res://Reticle.gd" id="2_b0koo"]
 [ext_resource type="Script" path="res://Player.gd" id="3_d3w4j"]
+[ext_resource type="Script" path="res://startagain.gd" id="3_je6ve"]
 [ext_resource type="Texture2D" uid="uid://dn25u60osx38i" path="res://tard_w_revolver.png" id="4_uf7q5"]
 [ext_resource type="ArrayMesh" uid="uid://cvbdrl5irikhe" path="res://tard_w_revolver.obj" id="5_b0i4p"]
 [ext_resource type="Script" path="res://TimerNode.gd" id="6_u20ik"]
@@ -118,6 +119,33 @@ offset_right = 1128.0
 offset_bottom = 85.0
 theme_override_font_sizes/font_size = 60
 text = "0.0"
+
+[node name="Fin" type="Panel" parent="UI"]
+layout_mode = 2
+offset_left = 567.0
+offset_top = 329.0
+offset_right = 567.0
+offset_bottom = 329.0
+
+[node name="Elims" type="Label" parent="UI/Fin"]
+layout_mode = 2
+offset_left = -75.0
+offset_top = -28.0
+offset_right = 67.0
+offset_bottom = -5.0
+text = "0"
+
+[node name="Button" type="Button" parent="UI/Fin"]
+layout_mode = 0
+offset_left = -65.6974
+offset_top = -6.33197
+offset_right = 86.3026
+offset_bottom = 24.668
+scale = Vector2(0.810418, 0.933207)
+action_mode = 0
+text = "Click to start again
+"
+script = ExtResource("3_je6ve")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("CAMERA_CONTROLLER", "SCORE")]
 script = ExtResource("3_d3w4j")
