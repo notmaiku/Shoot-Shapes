@@ -1,7 +1,7 @@
 extends CenterContainer
 
 @export var DOT_RADIUS : float = 4.0
-@export var DOT_COLOR : Color = Color.GREEN
+@export var DOT_COLOR : Color = Color.RED
 
 
 # Called when the node enters the scene tree for the first time.

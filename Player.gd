@@ -4,10 +4,15 @@ extends CharacterBody3D
 const MOUSESENSENSITIVITY = 0.1
 const RAYLENGTH = 1000
 
+var speed = 8
+var acceleration = 3
+var jump_power = 30
+
 @export var TILT_LOWER_LIMIT := deg_to_rad(-90.0)
 @export var TILT_UPPER_LIMIT := deg_to_rad(90.0)
 @export var CAMERA_CONTROLLER : Camera3D
 @export var SCORE : Label
+@onready var head  = $CameraNode
 
 var _mouse_rotation : Vector3
 var _mouse_input : bool = false
@@ -16,7 +21,8 @@ var _tilt_input : float
 var _player_rotation : Vector3
 var _camera_rotation : Vector3
 
-var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+#var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+var gravity = 0.98
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -25,8 +31,29 @@ func _ready():
 func _physics_process(delta):
 	# if not is_on_floor():
 	# 	velocity.y -= gravity * delta
-
+	var head_basis = head.get_global_transform().basis
 	_update_camera(delta)
+	
+	var direction = Vector3()
+	if Input.is_action_pressed("forward"):
+		direction -= head_basis.z
+	elif Input.is_action_pressed("backward"):
+		direction += head_basis.z
+	
+	if Input.is_action_pressed("left"):
+		direction -= head_basis.x
+	elif Input.is_action_pressed("right"):
+		direction += head_basis.x
+	
+	direction = direction.normalized()
+	
+	velocity = velocity.lerp(direction * speed, acceleration * delta)
+	velocity.y -= gravity
+	
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y += jump_power
+	
+	move_and_slide()
 	pass
 
 func _input(event):
