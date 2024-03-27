@@ -1,6 +1,6 @@
 [gd_scene load_steps=16 format=3 uid="uid://6144g73y7ngl"]
 
-[ext_resource type="Script" path="res://EnemySpawn.gd" id="1_obubo"]
+[ext_resource type="Script" path="res://world.gd" id="1_obubo"]
 [ext_resource type="PackedScene" uid="uid://v5ltuloci8lo" path="res://target.glb" id="1_t0v60"]
 [ext_resource type="Script" path="res://Reticle.gd" id="2_b0koo"]
 [ext_resource type="Script" path="res://Player.gd" id="3_d3w4j"]
@@ -29,6 +29,7 @@ albedo_texture = ExtResource("4_uf7q5")
 data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [node name="World" type="Node3D"]
+script = ExtResource("1_obubo")
 
 [node name="GridMap" type="GridMap" parent="."]
 
@@ -151,17 +152,12 @@ mesh = SubResource("PlaneMesh_5tyr7")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_d5n0j")
 
-[node name="Timers" type="Node" parent="."]
+[node name="TimerNode" type="Node" parent="." node_paths=PackedStringArray("TIMER")]
 script = ExtResource("6_u20ik")
+TIMER = NodePath("../UI/Time")
 
-[node name="LoopTimer" type="Timer" parent="Timers"]
+[node name="Timer" type="Timer" parent="TimerNode"]
 process_callback = 0
 one_shot = true
 
-[node name="EnemyTimer" type="Timer" parent="Timers"]
-
-[node name="EnemySpawn" type="Node3D" parent="Timers"]
-script = ExtResource("1_obubo")
-
-[connection signal="timeout" from="Timers/LoopTimer" to="." method="_on_timer_timeout"]
-[connection signal="timeout" from="Timers/EnemyTimer" to="Timers/EnemySpawn" method="_on_enemy_timer_timeout"]
+[connection signal="timeout" from="TimerNode/Timer" to="." method="_on_timer_timeout"]

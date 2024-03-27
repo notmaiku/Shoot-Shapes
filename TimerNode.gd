@@ -1,17 +1,23 @@
 extends Node
-@onready var timer = $Timer
-var elapsed_time = 0.0
+@onready var loop_timer = $LoopTimer
+@onready var enemy_timer = $EnemyTimer
+var curr_enemy = 0.0
+var curr_loop = 0.0
 var timer_value = 2.0
-@export var TIMER : Label
+var game_done = 8.0
+@onready var TIMER = $"../UI/Time"
 	
 func _ready():
-	timer.start()
+	loop_timer.start()
+	enemy_timer.start()
 	
 
 func _process(delta):
-	elapsed_time += delta
-	TIMER.text = str(elapsed_time)
-	if elapsed_time >= timer_value:
-		print("5 seconds have passed!")
-		elapsed_time = 0.0  
-		timer.start()       
+	curr_enemy += delta
+	curr_loop += delta
+	TIMER.text = str(curr_loop)
+	if curr_enemy >= timer_value:
+		curr_enemy = 0.0  
+		enemy_timer.start()      
+	if curr_loop >= game_done:
+		loop_timer.timeout()

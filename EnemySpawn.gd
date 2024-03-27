@@ -21,9 +21,7 @@ func spawn_enemy():
 	add_child(enemy_instance)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 
-func _on_timer_timeout():
+func _on_enemy_timer_timeout():
 	spawn_enemy()
