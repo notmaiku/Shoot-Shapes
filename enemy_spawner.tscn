@@ -1,25 +1,27 @@
-[gd_scene load_steps=16 format=3 uid="uid://dqkkl0i3ewpx6"]
+[gd_scene load_steps=16 format=3 uid="uid://dd6ddrt5v5psm"]
 
-[ext_resource type="PackedScene" uid="uid://cj6wvodoscpll" path="res://enemy_2.tscn" id="1_y5plg"]
-[ext_resource type="PackedScene" uid="uid://br1y03hxas65d" path="res://target.glb" id="2_ganlm"]
-[ext_resource type="Script" path="res://Enemy.gd" id="2_m5v40"]
-[ext_resource type="Script" path="res://Reticle.gd" id="2_nj8dl"]
-[ext_resource type="Script" path="res://Player.gd" id="3_a1l5q"]
-[ext_resource type="Texture2D" uid="uid://cst0j54tcwcs4" path="res://tard_w_revolver.png" id="4_8l02v"]
-[ext_resource type="ArrayMesh" uid="uid://cepyfyq1wimyo" path="res://tard_w_revolver.obj" id="4_vr6on"]
-[ext_resource type="Script" path="res://TimerNode.gd" id="6_5rj60"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_jwf2p"]
+[ext_resource type="PackedScene" uid="uid://v5ltuloci8lo" path="res://target.glb" id="1_aolqp"]
+[ext_resource type="Script" path="res://Reticle.gd" id="2_khlob"]
+[ext_resource type="Script" path="res://Player.gd" id="3_7g7xb"]
+[ext_resource type="Texture2D" uid="uid://dn25u60osx38i" path="res://tard_w_revolver.png" id="4_y0rtc"]
+[ext_resource type="ArrayMesh" uid="uid://cvbdrl5irikhe" path="res://tard_w_revolver.obj" id="5_wdai0"]
+[ext_resource type="Script" path="res://TimerNode.gd" id="6_am3ac"]
+[ext_resource type="Script" path="res://EnemySpawn.gd" id="7_sgsfo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_i6rqr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qgdqp"]
 size = Vector3(1.06946, 0.994629, 0.101807)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_gmi1j"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_no4ab"]
+size = Vector3(1.06946, 0.994629, 0.101807)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v0kk8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8cl4d"]
-albedo_texture = ExtResource("4_8l02v")
+albedo_texture = ExtResource("4_y0rtc")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_5tyr7"]
 
@@ -38,28 +40,31 @@ transform = Transform3D(0.950141, 0, 0, 0, 0.716185, 0, 0, 0, 0.950141, 0, -0.00
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.414347, -0.903671, -0.108149, -0.212239, -0.211494, 0.954057, -0.885026, -0.372357, -0.279426, 0, 10.0895, -5.64017)
 
-[node name="Enemy2" parent="." instance=ExtResource("1_y5plg")]
+[node name="Enemy2" type="Node3D" parent="." groups=["enemy"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.1904, 0, -31.0433)
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="Enemy2"]
+[node name="StaticBody3D" type="StaticBody3D" parent="Enemy2"]
+physics_material_override = SubResource("PhysicsMaterial_i6rqr")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy2/StaticBody3D2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.305433, -18.1633, 0.223696, 26.0438)
-shape = SubResource("BoxShape3D_jwf2p")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy2/StaticBody3D"]
+transform = Transform3D(0.938658, 0, 0, 0, 1, 0, 0, 0, 1, -18.168, 0.224378, 26.0421)
+shape = SubResource("BoxShape3D_qgdqp")
+
+[node name="target" parent="Enemy2/StaticBody3D" instance=ExtResource("1_aolqp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.1475, -0.477992, 26.0925)
 
 [node name="Enemy" type="Node3D" parent="." groups=["enemy"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.8649, 0, -28.2054)
-script = ExtResource("2_m5v40")
 
-[node name="target" parent="Enemy" instance=ExtResource("2_ganlm")]
+[node name="StaticBody3D" type="StaticBody3D" parent="Enemy"]
+physics_material_override = SubResource("PhysicsMaterial_gmi1j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/StaticBody3D"]
+transform = Transform3D(0.938658, 0, 0, 0, 1, 0, 0, 0, 1, -15.4396, 0.45999, 23.1465)
+shape = SubResource("BoxShape3D_no4ab")
+
+[node name="target" parent="Enemy/StaticBody3D" instance=ExtResource("1_aolqp")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4191, -0.24238, 23.1969)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="Enemy/target"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.144524, 0.397074, -0.543617)
-physics_material_override = SubResource("PhysicsMaterial_i6rqr")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/target/StaticBody3D"]
-transform = Transform3D(0.938658, 0, 0, 0, 1, 0, 0, 0, 1, 0.124023, 0.305296, 0.493217)
-shape = SubResource("BoxShape3D_qgdqp")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -79,7 +84,7 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("2_nj8dl")
+script = ExtResource("2_khlob")
 
 [node name="ScoreBox" type="Panel" parent="UI"]
 layout_mode = 0
@@ -115,7 +120,7 @@ theme_override_font_sizes/font_size = 60
 text = "0.0"
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("CAMERA_CONTROLLER", "SCORE")]
-script = ExtResource("3_a1l5q")
+script = ExtResource("3_7g7xb")
 CAMERA_CONTROLLER = NodePath("CameraNode/Camera3D")
 SCORE = NodePath("../UI/Score")
 
@@ -126,7 +131,7 @@ shape = SubResource("CapsuleShape3D_v0kk8")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/CollisionShape3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00858169, -0.971787, 0.696349)
 material_override = SubResource("StandardMaterial3D_8cl4d")
-mesh = ExtResource("4_vr6on")
+mesh = ExtResource("5_wdai0")
 
 [node name="CameraNode" type="Node3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0196627, 0.000323057)
@@ -138,7 +143,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.117757, -0.332259)
 update_mode = 1
 
 [node name="Floor" type="MeshInstance3D" parent="."]
-transform = Transform3D(13.8181, 0, 0, 0, 1, 0, 0, 0, 13.4892, -0.224333, -2.49242, 0.00472403)
+transform = Transform3D(13.8181, 0, 0, 0, 1, 0, 0, 0, 13.4892, -0.21427, -0.997694, 0)
 mesh = SubResource("PlaneMesh_5tyr7")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
@@ -146,10 +151,17 @@ mesh = SubResource("PlaneMesh_5tyr7")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_d5n0j")
 
-[node name="TimerNode" type="Node" parent="." node_paths=PackedStringArray("TIMER")]
-script = ExtResource("6_5rj60")
-TIMER = NodePath("../UI/Time")
+[node name="Timers" type="Node" parent="."]
+script = ExtResource("6_am3ac")
 
-[node name="Timer" type="Timer" parent="TimerNode"]
+[node name="LoopTimer" type="Timer" parent="Timers"]
 process_callback = 0
 one_shot = true
+
+[node name="EnemyTimer" type="Timer" parent="Timers"]
+
+[node name="EnemySpawn" type="Node3D" parent="Timers"]
+script = ExtResource("7_sgsfo")
+
+[connection signal="timeout" from="Timers/LoopTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="Timers/EnemyTimer" to="Timers/EnemySpawn" method="_on_enemy_timer_timeout"]

@@ -1,2 +1,19 @@
 # Normalize EOL for all files that Git considers text files.
 * text=auto eol=lf
+tard_w_revolver.png filter=lfs diff=lfs merge=lfs -text
+target_target.png filter=lfs diff=lfs merge=lfs -text
+test_tard_w_revolver.png filter=lfs diff=lfs merge=lfs -text
+revolver.obj filter=lfs diff=lfs merge=lfs -text
+tard_w_revolver.obj filter=lfs diff=lfs merge=lfs -text
+wor32B.tmp filter=lfs diff=lfs merge=lfs -text
+wor7AE4.tmp filter=lfs diff=lfs merge=lfs -text
+worB0C.tmp filter=lfs diff=lfs merge=lfs -text
+worE005.tmp filter=lfs diff=lfs merge=lfs -text
+worEE1D.tmp filter=lfs diff=lfs merge=lfs -text
+wor1B75.tmp filter=lfs diff=lfs merge=lfs -text
+wor2E83.tmp filter=lfs diff=lfs merge=lfs -text
+worC836.tmp filter=lfs diff=lfs merge=lfs -text
+worFD95.tmp filter=lfs diff=lfs merge=lfs -text
+target.glb filter=lfs diff=lfs merge=lfs -text
+test.glb filter=lfs diff=lfs merge=lfs -text
+tard_w_revolver.mtl filter=lfs diff=lfs merge=lfs -text

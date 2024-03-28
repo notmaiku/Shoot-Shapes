@@ -16,18 +16,13 @@ data_*/
 mono_crash.*.json
 
 # Model
-*.obj
-*.png
 *.blg
 *.fbx
 *.import
-*.mtl
-*.glb
 *.blend
 
 
 # Extra
 *.exe
 *.txt
-*.rtf
 *.json
