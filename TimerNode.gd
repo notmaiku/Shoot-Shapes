@@ -16,9 +16,9 @@ func _ready():
 	enemy_timer.start()
 
 func _process(delta):
-	curr_enemy += delta
 	if loop_time_go == true:
 		curr_loop += delta
+		curr_enemy += delta
 	TIMER.text = str(curr_loop)
 	if curr_enemy >= timer_value:
 		curr_enemy = 0.0  
