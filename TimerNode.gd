@@ -6,8 +6,8 @@ extends Node
 
 var curr_enemy = 0.0
 var curr_loop = 0.0
-var timer_value = 2.0
-var game_done = 8.0
+var timer_value = 1.0
+var game_done = 20.0
 var loop_time_go = true
 
 	
